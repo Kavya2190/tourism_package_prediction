@@ -28,7 +28,7 @@ jobs:
         with:
           name: registered-data
           path: tourism_project/data/tourism.csv
-  # ---------- JOB 2: Data Preparation ---------- 
+  # ---------- JOB 2: Data Preparation ----------
   data-prep:
     name: Data Preparation
     needs: register-dataset        # dependent on Job1 completion
@@ -51,7 +51,7 @@ jobs:
             Xtest.csv
             ytrain.csv
             ytest.csv
-  
+
   # ---------- JOB 3: Model Training + MLflow Tracking ----------
   model-training:
     name: Model Training
