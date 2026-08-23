@@ -23,10 +23,10 @@ Xtrain, Xtest, ytrain, ytest = train_test_split(
 )
 
 # Save the splitted X and Y train and test datasets to be used in the next steps.
-Xtrain.to_csv("tourism_project/deployment/Xtrain.csv", index=False)
-Xtest.to_csv("tourism_project/deployment/Xtest.csv", index=False)
-ytrain.to_csv("tourism_project/deployment/ytrain.csv", index=False)
-ytest.to_csv("tourism_project/deployment/ytest.csv", index=False)
+Xtrain.to_csv("Xtrain.csv", index=False)
+Xtest.to_csv("Xtest.csv", index=False)
+ytrain.to_csv("ytrain.csv", index=False)
+ytest.to_csv("ytest.csv", index=False)
 
 # Prints the status of the split and values of corresponding categorical values.
 print("Data prepared: train/test splits written.")
