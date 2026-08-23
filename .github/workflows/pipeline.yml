@@ -47,10 +47,10 @@ jobs:
         with:
           name: data-splits
           path: |
-            tourism_project/deployment/Xtrain.csv
-            tourism_project/deployment/Xtest.csv
-            tourism_project/deployment/ytrain.csv
-            tourism_project/deployment/ytest.csv
+            Xtrain.csv
+            Xtest.csv
+            ytrain.csv
+            ytest.csv
 
   # ---------- JOB 3: Model Training + MLflow Tracking ----------
   model-training:
