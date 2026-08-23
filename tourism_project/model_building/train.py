@@ -15,12 +15,12 @@ mlflow.set_tracking_uri("http://localhost:5000")
 mlflow.set_experiment("MLOps_Tourism_Package_Prediction_training_experiment")
 
 # Xtrain/Xtest/ytrain/ytest are downloaded from the previous job's artifact
-Xtrain = pd.read_csv("Xtrain.csv")
-Xtest  = pd.read_csv("Xtest.csv")
-ytrain = pd.read_csv("ytrain.csv").squeeze()
-ytest  = pd.read_csv("ytest.csv").squeeze()
+Xtrain = pd.read_csv("tourism_project/deployment/Xtrain.csv")
+Xtest  = pd.read_csv("tourism_project/deployment/Xtest.csv")
+ytrain = pd.read_csv("tourism_project/deployment/ytrain.csv").squeeze()
+ytest  = pd.read_csv("tourism_project/deployment/ytest.csv").squeeze()
 
-# One-hot encode Categorical features and scale numeric features
+# Define Categorical features and numeric features
 numeric_features = ["Age","CityTier", "DurationOfPitch",  "NumberOfPersonVisiting", "NumberOfFollowups",
  "PreferredPropertyStar",  "NumberOfTrips",
 "Passport", "PitchSatisfactionScore", "OwnCar", "NumberOfChildrenVisiting",
@@ -33,6 +33,7 @@ class_weight = ytrain.value_counts()[0] / ytrain.value_counts()[1]
 class_weight
 
 # Define the preprocessing steps
+# One-hot encode Categorical features and scale numeric features
 preprocessor = make_column_transformer(
     (StandardScaler(), numeric_features),
     (OneHotEncoder(handle_unknown="ignore"), categorical_features)
@@ -79,13 +80,15 @@ with mlflow.start_run():
     print("Best params:", grid_search.best_params_)
 
     classification_threshold = 0.45
-
+    
+    #Predict train and test 
     y_pred_train_proba = best_model.predict_proba(Xtrain)[:, 1]
     y_pred_train = (y_pred_train_proba >= classification_threshold).astype(int)
 
     y_pred_test_proba = best_model.predict_proba(Xtest)[:, 1]
     y_pred_test = (y_pred_test_proba >= classification_threshold).astype(int)
-
+    
+    # Classification report
     train_report = classification_report(ytrain, y_pred_train, output_dict=True)
     test_report = classification_report(ytest, y_pred_test, output_dict=True)
     print(classification_report(ytest, y_pred_test))
@@ -102,8 +105,8 @@ with mlflow.start_run():
         "test_f1-score": test_report["1"]["f1-score"]
     })
 
-    # Save next to app.py so the Streamlit app can load it directly, and log
-    # it as an MLflow artifact for traceability
+    # Saving the best model to the repository : Saving next to app.py so the Streamlit app can load it directly, and log
+    # it as an MLflow artifact for traceability    
     model_path = "tourism_project/deployment/best_tourism_package_prediction_model_v1.joblib"
     joblib.dump(best_model, model_path)
     mlflow.log_artifact(model_path, artifact_path="model")
