@@ -15,10 +15,10 @@ mlflow.set_tracking_uri("http://localhost:5000")
 mlflow.set_experiment("MLOps_Tourism_Package_Prediction_training_experiment")
 
 # Xtrain/Xtest/ytrain/ytest are downloaded from the previous job's artifact
-Xtrain = pd.read_csv("tourism_project/deployment/Xtrain.csv")
-Xtest  = pd.read_csv("tourism_project/deployment/Xtest.csv")
-ytrain = pd.read_csv("tourism_project/deployment/ytrain.csv").squeeze()
-ytest  = pd.read_csv("tourism_project/deployment/ytest.csv").squeeze()
+Xtrain = pd.read_csv("Xtrain.csv")
+Xtest  = pd.read_csv("Xtest.csv")
+ytrain = pd.read_csv("ytrain.csv").squeeze()
+ytest  = pd.read_csv("ytest.csv").squeeze()
 
 # Define Categorical features and numeric features
 numeric_features = ["Age","CityTier", "DurationOfPitch",  "NumberOfPersonVisiting", "NumberOfFollowups",
