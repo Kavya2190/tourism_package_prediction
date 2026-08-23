@@ -1,5 +1,5 @@
 import pandas as pd
-
+#Data available path
 RAW_PATH = "tourism_project/data/tourism.csv"
 
 # Load the raw dataset
@@ -14,9 +14,9 @@ expected_columns = [
 missing = [c for c in expected_columns if c not in df.columns]
 if missing:
     raise ValueError(f"Dataset is missing expected columns: {missing}")
-
-print("Dataset registered successfully.")
+#Print summary of the data available
+print("Dataset is registered successfully. Below is the summary : ")
 print(f"Rows: {df.shape[0]}, Columns: {df.shape[1]}")
-print("Columns:", list(df.columns))
+print("Columns available in the registered dataset :", list(df.columns))
 print("ProdTaken distribution:")
 print(df["ProdTaken"].value_counts())
