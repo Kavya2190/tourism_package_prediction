@@ -7,13 +7,14 @@ import joblib
 model_path = os.path.join(os.path.dirname(__file__), "best_tourism_package_prediction_model_v1.joblib")
 model = joblib.load(model_path)
 
+# Header for app input parameters
 st.title("Tourism Package Prediction App")
 st.write("""
 This application predicts the likelihood of a customer purchasing a package based on its operational parameters.
 Enter the data below to get a prediction.
 """)
 
-# Numerical Values
+# Numerical Values defined with min value, max value and default values
 Age= st.number_input("Age",18,90,25,1)
 CityTier = st.selectbox("City Tier", [1, 2, 3])
 DurationOfPitch = st.number_input("Duration of Pitch",1,120,5,1)
@@ -34,7 +35,7 @@ Gender = st.selectbox("Gender", ["Male", "Female"])
 ProductPitched = st.selectbox("ProductPitched", ['Deluxe', 'Basic', 'Standard', 'Super Deluxe', 'King'])
 MaritalStatus = st.selectbox("MaritalStatus", ["Single", "Married", "Divorced"])
 Designation = st.selectbox("Designation",['Manager', 'Executive', 'Senior Manager', 'AVP', 'VP'])
-
+# Read data from user
 input_data = pd.DataFrame([{
     "Age": Age,
     "CityTier": CityTier,
@@ -42,13 +43,13 @@ input_data = pd.DataFrame([{
     "NumberOfPersonVisiting": NumberOfPersonVisiting,
     "NumberOfFollowups": NumberOfFollowups,
     "PreferredPropertyStar": PreferredPropertyStar,
-       "NumberOfTrips": NumberOfTrips,
+    "NumberOfTrips": NumberOfTrips,
     "Passport": Passport,
     "PitchSatisfactionScore": PitchSatisfactionScore,
     "OwnCar": OwnCar,
     "NumberOfChildrenVisiting": NumberOfChildrenVisiting,
     "MonthlyIncome": MonthlyIncome,
-      "TypeofContact": TypeofContact,
+    "TypeofContact": TypeofContact,
     "Occupation": Occupation,
     "Gender": Gender,
     "ProductPitched": ProductPitched,
@@ -56,8 +57,9 @@ input_data = pd.DataFrame([{
     "Designation": Designation,
 }])
 
+# Display results post prediction
 if st.button("Predict Tourism Package Selection"):
     prediction = model.predict(input_data)[0]
-    result = "Tourism Package Selected" if prediction == 1 else "Tourism Package Not Selected"
+    result = "Potential buyer - Tourism Package Selected" if prediction == 1 else "Not a Potential buyer - Tourism Package Not Selected"
     st.subheader("Prediction Result:")
     st.success(f"The model predicts: **{result}**")
